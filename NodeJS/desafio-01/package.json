@@ -1,0 +1,15 @@
+{
+  "name": "desafio-01",
+  "version": "1.0.0",
+  "description": "desafio-01-bootcamp",
+  "main": "index.js",
+  "scripts": {
+    "test": "dev"
+  },
+  "author": "kelvin-musseli",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "nodemon": "^1.19.1"
+  }
+}
