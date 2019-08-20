@@ -4,12 +4,14 @@
   "description": "desafio-01-bootcamp",
   "main": "index.js",
   "scripts": {
-    "test": "dev"
+    "dev": "nodemon index.js"
   },
   "author": "kelvin-musseli",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.17.1",
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
     "nodemon": "^1.19.1"
   }
 }
