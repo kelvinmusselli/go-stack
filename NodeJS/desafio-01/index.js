@@ -125,13 +125,12 @@ server.delete(`/projects/:id`, verifyExistProject, (req, res) => {
 });
 //create tasks
 server.post('/projects/:id/tasks', verifyExistProject, (req, res) => {
-    const { id } = req.params;
-    const { title } = req.body;
+  const { id } = req.params;
+  const { title } = req.body;
+  const project = projects.find(p => p.id == id);
   
-    const project = projects.find(p => p.id == id);
+  project.tasks.push(title);
   
-    project.tasks.push(title);
-  
-    return res.json(project);
-  });
+  return res.json(project);
+});
 server.listen(3000);
