@@ -1,8 +1,9 @@
 import Sequelize, { Model } from 'sequelize';
 import bcrypt from 'bcryptjs';
 
-class UserModel extends Model {
+class User extends Model {
     static init(sequelize){
+        
         super.init({
             name:Sequelize.STRING,
             email:Sequelize.STRING,
@@ -14,10 +15,12 @@ class UserModel extends Model {
         });
 
         this.addHook('beforeSave', async user => {
+            
             if(user.password){
                 user.password_hash = await bcrypt.hash(user.password, 9);
             }
         });
+
         return this;
     };
 
@@ -26,4 +29,4 @@ class UserModel extends Model {
     }
 };
 
-export default UserModel;
+export default User;

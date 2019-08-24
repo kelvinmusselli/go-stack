@@ -1,4 +1,4 @@
-import UserModel from '../models/UserModel';
+import User from '../models/User';
 import * as Yup from 'yup';
 
 class UserController {
@@ -18,17 +18,17 @@ class UserController {
         }
 
         // verifica se email existe na base com base no post enviado
-        const userExists = await UserModel.findOne({ where: { email : req.body.email }});
+        const userExists = await User.findOne({ where: { email : req.body.email }});
         if(userExists){
             return res.status(400).json({ error: 'Usuário já existe amigo(a) '});
         }
         
         // se o email nao esta na base ele entra aqui agora
-        const { id, name, email, provider } = await UserModel.create(req.body);
+        const { id, name, email, provider } = await User.create(req.body);
 
         return res.json(
-                            { id, name, email , provider }, 
-                            { message:`${name} Você foi cadastrado com sucesso!` }
+                            { id, name, email , provider }
+                            // { message:`${name} Você foi cadastrado com sucesso!` }
                         );
     }
 
@@ -57,12 +57,12 @@ class UserController {
         // se o email for igual a um existe retorno um error
         // se a senha nao estiver igual da base ele retorno erro tbm
         const { email, oldPassword } = req.body;
-        const userUpdate = await UserModel.findByPk(req.body.userId);
+        const userUpdate = await User.findByPk(req.body.userId);
 
         // verificando email se está diferente do que recebe se estiver ele entra aqui e ai ele executa o find na base para ver se tem um email igual se tiver igual ele da erro pq a unique key é o email
         if(email !== userUpdate.email){
             // buscar o email que foi recebido no req.body e compara com o que tem nas base  buscando por ele
-            const userExists = await UserModel.findOne({ where: { email} });
+            const userExists = await User.findOne({ where: { email} });
             if(userExists){
                 return res.status(400).json({error:'Este e-mail é de outro usuário.'});
             }
@@ -77,7 +77,7 @@ class UserController {
 
         return res.json({ id, name, email, provider });
 
-    }
+    };
 
 }
 

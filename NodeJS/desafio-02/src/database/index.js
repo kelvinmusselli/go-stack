@@ -1,6 +1,6 @@
 import Sequelize, { ConnectionError } from 'sequelize';
 
-import UserModel from '../app/models/UserModel';
+import User from '../app/models/User';
 // models
 
 // banco de dados config
@@ -8,7 +8,7 @@ import databaseConfig from '../config/database';
 
 // var que chama todos models do meu sistema para conectar com banco de dados
 const models = [
-    UserModel,
+    User,
 ];
 // classe de conexao com banco de dados
 class Database {

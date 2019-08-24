@@ -1,7 +1,7 @@
 import { Router } from 'express';
-import UserController from './app/controllers/UserController';
-import SessionController from './app/controllers/SessionController';
-import authMiddleware from './app/middleware/auth';
+import UserController from '../src/app/controllers/UserController';
+import SessionController from '../src/app/controllers/SessionController';
+import authMiddleware from '../src/app/middleware/auth';
 const routes = new Router();
 
 routes.post('/users', UserController.Create);

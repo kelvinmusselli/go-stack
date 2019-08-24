@@ -4,13 +4,14 @@
 // e caso ele esteja na base ele ira receber
 //  um token e apos receber um token ele vai 
 // verificar o email e sneha para acessar o sistema
-import UserModel from '../models/UserModel';
+import User from '../models/User';
 import jwt from 'jsonwebtoken';
 import auth from '../../config/auth';
 import * as Yup from 'yup';
 
 
 class SessionController {
+
     async CreateSession(req, res) {
 
         // verificando se os itens obrigatorios de sessao forma enviados
@@ -27,32 +28,32 @@ class SessionController {
         //  agora abaixo
 
         // DADOS DO POST
-        const { email, body } = req.body;
+        const { email, password } = req.body;
 
         // PROCURANDO NA BASE SE EXISTE
-        const userSessioned = await UserModel.findOne({ where : { email }});
+        const user = await User.findOne({ where : { email }});
     
         // NESTE CASO NAO EXISTE ENTÃO ELE FECHA SESSAO E RETORNO ERRO E NAO GERA TOKEN
-        if(!userSessioned){
+        if(!user){
             return res.json(401).json( { error : "Usuário não existente " });
         }
 
 
         // VERIFICANDO A SENHA DO USUARIO QUE MANDO NO POST DE ABRIR UMA SESSAO
-        if(!(await UserModel.checkPassword(password))){
+        if(!(await user.checkPassword(password))){
             return res.status(401).json({ error: "Senha invalida" });
         }
 
         // SE CHEGOU ATE AQUI DEU TUDO CERTO AGORA
-        const { id, name } = userSessioned;
+        const { id, name } = user;
 
         return res.json({
-            userSessioned:{
+            user:{
                 id,
                 name,
                 email
             }, 
-            token:jwt.sign({ id,  }, auth.secret, { 
+            token:jwt.sign({ id }, auth.secret, { 
                 expiresIn: auth.expiresIn,
             }),
             message:"Autenticado com sucesso!"
