@@ -57,7 +57,7 @@ class UserController {
         // se o email for igual a um existe retorno um error
         // se a senha nao estiver igual da base ele retorno erro tbm
         const { email, oldPassword } = req.body;
-        const userUpdate = await User.findByPk(req.body.userId);
+        const userUpdate = await User.findByPk(req.userId);
 
         // verificando email se está diferente do que recebe se estiver ele entra aqui e ai ele executa o find na base para ver se tem um email igual se tiver igual ele da erro pq a unique key é o email
         if(email !== userUpdate.email){
