@@ -1,7 +1,7 @@
 import Sequelize, { ConnectionError } from 'sequelize';
 
 import User from '../app/models/User';
-import User from '../app/models/File';
+import File from '../app/models/File';
 
 import databaseConfig from '../config/database';
 
