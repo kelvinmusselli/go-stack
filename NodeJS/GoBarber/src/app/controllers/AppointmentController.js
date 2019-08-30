@@ -1,9 +1,10 @@
 import Appointment from '../models/Appointment';
 import User from '../models/User';
 import File from '../models/File';
-
-import { startOfHour, parseISO, isBefore } from 'date-fns';
+import { startOfHour, parseISO, isBefore, format } from 'date-fns';
+import pt from 'date-fns/locale/pt';
 import * as Yup from 'yup';
+import Notification from '../schemas/Notification';
 
 class AppointmentController {
 
@@ -77,14 +78,22 @@ class AppointmentController {
             return res.status(400).json({ error: 'Horário já marcado neste horario e dia'})
         }
 
-
-
-
         const appointment = await Appointment.create({
             user_id: req.userId,
             provider_id,
             date
         });
+
+        // notification to provider
+        const user = await User.findByPk(req.userId);
+        const formattedDate = format(
+            hourStart,  
+            "'Dia' dd 'de' MMMM', às' H:mm'h'" 
+        );
+        await Notification.create({
+            content:`Novo agendamento criado de ${user.name} para ${formattedDate}`,
+            user:provider_id,
+        })
 
         return res.json(appointment);
     };
