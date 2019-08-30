@@ -1,4 +1,4 @@
 export default{
-    secret:'logadonogobarbertopssimodokelvin',
+    secret:'kelvintestejwt',
     expiresIn: '7d'
 };
