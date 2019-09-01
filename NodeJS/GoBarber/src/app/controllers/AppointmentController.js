@@ -88,10 +88,10 @@ class AppointmentController {
         const user = await User.findByPk(req.userId);
         const formattedDate = format(
             hourStart,  
-            "'Dia' dd 'de' MMMM', às' H:mm'h'" 
+            "'Dia' dd 'de' MMMM', às' H:mm'h'", { locale : pt } 
         );
         await Notification.create({
-            content:`Novo agendamento criado de ${user.name} para ${formattedDate}`,
+            content:`Novo agendamento criado de ${user.name} para dia ${formattedDate}`,
             user:provider_id,
         })
 

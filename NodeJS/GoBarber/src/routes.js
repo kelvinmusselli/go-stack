@@ -8,7 +8,7 @@ import ProviderController from '../src/app/controllers/ProviderController';
 import AppointmentController from '../src/app/controllers/AppointmentController';
 import authMiddleware from '../src/app/middleware/auth';
 import ScheduleController from './app/controllers/ScheduleController';
-
+import NotificationController from './app/controllers/NotificationController';
 
 const routes = new Router();
 
@@ -29,6 +29,9 @@ routes.get('/appointments', AppointmentController.index);
 
 //listando para o provider 
 routes.get('/schedule', ScheduleController.index);
+
+routes.get('/notifications', NotificationController.index);
+routes.put('/notifications/:id', NotificationController.update);
 
 routes.post('/files', upload.single('file'), FileController.Create);
 export default routes;
