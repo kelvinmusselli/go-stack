@@ -1,10 +1,11 @@
 import Appointment from '../models/Appointment';
 import User from '../models/User';
 import File from '../models/File';
-import { startOfHour, parseISO, isBefore, format } from 'date-fns';
+import { startOfHour, parseISO, isBefore, format, subHours } from 'date-fns';
 import pt from 'date-fns/locale/pt';
 import * as Yup from 'yup';
 import Notification from '../schemas/Notification';
+import Mail from '../lib/Mail';
 
 class AppointmentController {
 
@@ -97,6 +98,53 @@ class AppointmentController {
 
         return res.json(appointment);
     };
+
+    async delete(req, res) {
+        const appointment = await Appointment.findByPk(req.params.id, {
+            include: [
+                {
+                    model:User,
+                    as :'provider',
+                    attributes:['name', 'email']
+                },
+                {
+                    model:User,
+                    as: 'user',
+                    attributes: ['name']
+                }
+            ]
+        });
+
+        if(appointment.user_id !== req.userId){
+            return res.status(401).json({ error: "Você não é o dono do agendamento  e não pode apagar este apontamento "});
+        }
+
+        const dateWithSub = subHours(appointment.date, 2);
+
+        if(isBefore(dateWithSub, new Date())){
+            return res.status(401).json({ error: "VocÊ não pode mais cancelar o apontamento, por estar menos de duas horas do horario marcado!"});
+        }
+
+        appointment.canceled_at = new Date();
+
+        await appointment.save();
+
+        await Mail.sendMail({
+            to:`${appointment.provider.name} <${appointment.provider.email}>`,
+            subject:`Agendamento cancelado pelo cliente`,
+            text:'cancellation',
+            context:{
+                provider : appointment.provider.name,
+                user: appointment.user.name,
+                date: format(
+                    appointment.date,  
+                    "'Dia' dd 'de' MMMM', às' H:mm'h'", { locale : pt } 
+                )
+            }
+        })
+
+        return res.json(appointment); 
+    }
 }
 
 export default new AppointmentController();
