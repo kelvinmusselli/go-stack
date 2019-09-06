@@ -5,10 +5,10 @@ import { promisify } from 'util';
 export default async (req, res, next) => {
 
     const authHeader = req.headers.authorization;
-    console.log(authHeader);
+    console.log(req.headers);
     
     if(!authHeader){
-        return res.status(401).json({ error:"Não autorizado o acesso" });
+        return res.status(401).json({ error:"Não autorizado o acesso", });
     }
 
     const [, token ] = authHeader.split(' ');
