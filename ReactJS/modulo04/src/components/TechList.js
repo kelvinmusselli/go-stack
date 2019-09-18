@@ -3,14 +3,34 @@ import React, { Component } from 'react';
 import TechItem from './Techitem';
 
 class TechList extends Component {
+
     state = {
         newTech:'',
-        techs:[
-            'Node.js',
-            'ReactJS',
-            'React-Native'
-        ]
+        techs:[]
     };
+
+    //este componente é executado assim que o componenet é executado em tela
+    componentDidMount(){
+        const techs =  localStorage.getItem('techs');
+        if(techs){
+            this.setState({ techs:JSON.parse(techs) });
+        }
+    }
+
+    //Executado sempre que houver alguma alteração no estado ou na props
+    // e recebe as propriedas para manipular
+    componentDidUpdate(prevProps, prevState) {
+        // this.props            this.state
+        if(prevState.techs !== this.state.techs){
+            localStorage.setItem('techs', JSON.stringify(this.state.techs));
+        }
+    }
+
+    // Executado quando o componente deixa de existir
+    componentWillUnmount(){
+
+    }
+
 
     handleInputChange = e => {
         
@@ -46,7 +66,6 @@ class TechList extends Component {
                         //         type='button'>Remover</button>
                         // </li>
                     ))}
-                    <TechItem/>
                     
                 </ul>
                 <input 
