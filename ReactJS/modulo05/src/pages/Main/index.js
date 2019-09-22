@@ -1,6 +1,7 @@
 import React from 'react';
 
-import { Title } from './styles';
+import { FaGithubAlt } from 'react-icons/fa';
+import { Container } from './styles';
 
 export default function Main() {
   return (
@@ -11,8 +12,13 @@ export default function Main() {
     //   <small>menor</small>
     // </Title>
 
-    <Title>
-      Hello World
-    </Title>
+    <Container>
+      <FaGithubAlt/>
+      <h1>Repositórios</h1>
+
+      <Form onSubmit={}>
+
+      </Form>
+    </Container>
   );
 }
