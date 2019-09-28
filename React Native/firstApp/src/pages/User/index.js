@@ -72,6 +72,7 @@ export default class User extends Component {
     };
 
     handleNavigate = repository => {
+      
       const { navigation } = this.props;
   
       navigation.navigate('Repository', { repository });

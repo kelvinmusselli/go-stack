@@ -13,7 +13,9 @@ import {
   List, 
   User, 
   ProfileButton, 
-  ProfileButtonText, 
+  ProfileButtonText,
+  MyRepositoryButton,
+  MyRepositoryButtonText,
   Bio, 
   Name, 
   Avatar,
@@ -53,6 +55,7 @@ export default class Main extends Component {
     if(prevState.users !== this.state.users){
       AsyncStorage.setItem('users', JSON.stringify(users)); 
     }
+
   };
 
   handleAddUser = async () => {
@@ -83,21 +86,24 @@ export default class Main extends Component {
   };
 
   handleNavigate = (user) => {
-
     const { navigation } = this.props;
     navigation.navigate('User', { user });
-
   };
 
   handleClear = () => {
-
     const { users } = this.state;
-    
     this.setState({
         users: []
     });
-
   };
+
+  handleSeeMyRepo = myrepository => {
+
+    const { navigation } = this.props;
+
+    navigation.navigate('MyRepository', { myrepository });
+    
+  }
 
 
   render() {
@@ -141,6 +147,11 @@ export default class Main extends Component {
                 Ver Perfil
               </ProfileButtonText>
             </ProfileButton>
+            <MyRepositoryButton onPress={() => {this.handleSeeMyRepo(item)}}>
+              <MyRepositoryButtonText>
+                Repositórios Pessoais
+              </MyRepositoryButtonText>
+            </MyRepositoryButton>
           </User>
         )}
         />

@@ -30,8 +30,9 @@ export const SubmitButton = styled(RectButton)`
     border-radius:4px;
     margin-left:10px;
     padding:0 12px;
-    opacity:${props => (props.loading ?0.7: 1)}
+    opacity:${props => (props.loading ?0.7: 1)};
 `;
+
 
 export const List = styled.FlatList.attrs({
     showsVerticalScrollIndicator:false,
@@ -81,6 +82,23 @@ export const ProfileButton = styled(RectButton)`
 `;
 
 export const ProfileButtonText = styled.Text`
+    font-size:14px;
+    font-weight:bold;
+    color:#fff;
+    text-transform:uppercase;
+`;
+
+export const MyRepositoryButton = styled(RectButton)`
+    margin-top:10px;
+    align-self:stretch;
+    border-radius:4px;
+    background:#7159c1;
+    justify-content:center;
+    align-items:center;
+    height:36px;
+`;
+
+export const MyRepositoryButtonText = styled.Text`
     font-size:14px;
     font-weight:bold;
     color:#fff;
