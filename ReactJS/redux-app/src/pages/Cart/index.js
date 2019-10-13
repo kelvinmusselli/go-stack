@@ -98,6 +98,6 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators(CartActions, dispatch);
 
 export default connect(
-
     mapStateToProps,
-    CartActions)(Cart);
+    CartActions
+  )(Cart);
